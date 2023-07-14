@@ -1,4 +1,20 @@
--- List of song IDs, durations in seconds, and song names
+game.Players.LocalPlayer.Chatted:Connect(function(msg)
+    if string.sub(msg:lower(), 0, 5) == "pause" then 
+        for _, sound in pairs(workspace.Terrain._Game.Folder:GetDescendants()) do
+            if sound:IsA("Sound") and sound.Playing then
+                sound.Playing = false
+            end
+        end
+    elseif string.sub(msg:lower(), 0, 4) == "play" then
+        for _, sound in pairs(workspace.Terrain._Game.Folder:GetDescendants()) do
+            if sound:IsA("Sound") and not sound.Playing then
+                sound.Playing = true
+            end
+        end
+    end
+end)
+
+
 local songIds = {
     {9043892984, 200, "dele mami"},
     {9043878179, 200, "Kikbak ft Styliztik & Kaisha"},
@@ -65,7 +81,7 @@ local function playNextSong()
     game.Players:Chat('music ' .. tostring(currentSongId))
 
     -- Announce the song name
-    game.Players:Chat('h/ Now playing: ' .. currentSongName)
+    game.Players:Chat('h/ n\n\n\Now playing: ' .. currentSongNamen\n\n\n)
 
     -- Wait for the duration of the current song before playing the next one
     wait(currentSongDuration + 1) -- Adding a small buffer time to ensure the song is complete
@@ -75,7 +91,7 @@ local function playNextSong()
 end
 
 -- Send a chat message indicating the playlist name
-game.Players:Chat("h/ Now playing from Soar's Playlist")
+game.Players:Chat("h/ n\n\n\Now playing from Soar's Playlistn\n\n\n")
 
 -- Wait for 5 seconds before starting the first song
 wait(5)
