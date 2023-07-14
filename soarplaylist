@@ -1,0 +1,87 @@
+-- List of song IDs, durations in seconds, and song names
+local songIds = {
+    {9043892984, 200, "dele mami"},
+    {9043878179, 200, "Kikbak ft Styliztik & Kaisha"},
+    {5410082468, 200, "snavs - Us"},
+    {1841443579, 200, "tripping on love"},
+    {7029017448, 206, "play it cool - terry zchong"},
+    {1846808350, 200, "get up and boogy"},
+    {7023741506, 200, "Elypsis - i miss you"},
+    {1848220276, 200, "different than normal"},
+    {9042523170, 200, "come closer -- reginald keith"},
+    {9043876028, 200, "flexxin on the gram"},
+    {9043893928, 200, "sin remordimientos"},
+    {9043870264, 200, "shumba - real friend"},
+    {6901063458, 200, "rihanna SOS"},
+    {7024035759, 250, "dexter king - get to know you"},
+    {1835662728, 200, "unknown"},
+    {9040163991, 200, "Soviet Anthem"},
+    {1836807218, 200, "soarcrash"},
+    {1837367292, 201, "Hound Dogs of Love"},
+    {1840003540, 200, "Tell it to yourself"},
+    {1838488910, 230, "Take the Road"},
+    {1837871444, 230, "Your love is Anarchy"},
+    {1843324953, 235, "Night out"},
+    {1840047556, 235, "So bad - Juice music"},
+    {1838569831, 235, "Never gonna give you up"},
+    {1837258874, 131, "la cucaracha😃😜😀"},
+    {1843434135, 235, "Twisted Love"},
+    {1837881688, 185, "Shattered Heart"},
+    {1837848096, 220, "Feels good to Cry"},
+    {1840041842, 190, "Till the Mornin"},
+}
+
+-- Function to shuffle the song IDs using Fisher-Yates algorithm
+local function shuffleSongIds()
+    local currentIndex = #songIds
+    while currentIndex > 1 do
+        local randomIndex = math.random(1, currentIndex)
+        songIds[currentIndex], songIds[randomIndex] = songIds[randomIndex], songIds[currentIndex]
+        currentIndex = currentIndex - 1
+    end
+end
+
+-- Variable to store the current song index
+local currentIndex = 0
+
+-- Function to play the next song in the playlist
+local function playNextSong()
+    -- Increment the index to play the next song
+    currentIndex = currentIndex + 1
+
+    -- Check if the current index exceeds the playlist length
+    if currentIndex > #songIds then
+        currentIndex = 1 -- Reset the index to the first song
+        shuffleSongIds() -- Shuffle the song IDs for the next iteration
+    end
+
+    -- Get the current song information
+    local currentSong = songIds[currentIndex]
+    local currentSongId = currentSong[1]
+    local currentSongDuration = currentSong[2]
+    local currentSongName = currentSong[3]
+
+    -- Play the current song
+    game.Players:Chat('music ' .. tostring(currentSongId))
+
+    -- Announce the song name
+    game.Players:Chat('h/ Now playing: ' .. currentSongName)
+
+    -- Wait for the duration of the current song before playing the next one
+    wait(currentSongDuration + 1) -- Adding a small buffer time to ensure the song is complete
+
+    -- Play the next song
+    playNextSong()
+end
+
+-- Send a chat message indicating the playlist name
+game.Players:Chat("h/ Now playing from Soar's Playlist")
+
+-- Wait for 5 seconds before starting the first song
+wait(5)
+
+-- Shuffle the song IDs before starting the playlist
+shuffleSongIds()
+
+-- Start playing the first song in the shuffled playlist
+playNextSong()
