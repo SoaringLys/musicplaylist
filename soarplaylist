@@ -5,12 +5,14 @@ game.Players.LocalPlayer.Chatted:Connect(function(msg)
                 sound.Playing = false
             end
         end
+        game.Players:Chat("h/ n\n\n\n\n\n\n\n\n\nPaused\n\n\n\n\n\n\n\n") -- Announce "Paused"
     elseif string.sub(msg:lower(), 0, 4) == "play" then
         for _, sound in pairs(workspace.Terrain._Game.Folder:GetDescendants()) do
             if sound:IsA("Sound") and not sound.Playing then
                 sound.Playing = true
             end
         end
+        game.Players:Chat("h/ n\n\n\n\n\n\n\n\n\nPlaying\n\n\n\n\n\n\n\n") -- Announce "Playing"
     end
 end)
 
@@ -84,7 +86,11 @@ local function playNextSong()
     game.Players:Chat("h \n\n\n\n\n\n\n\n\n\n\nNow playing: \n" .. currentSongName .. "\n\n\n\n\n\n\n\n\n\n\n")
 
     -- Wait for the duration of the current song before playing the next one
-    wait(currentSongDuration + 1) -- Adding a small buffer time to ensure the song is complete
+    local elapsedTime = 0
+    while elapsedTime < currentSongDuration do
+        wait(1) -- Wait for 1 second
+        elapsedTime = elapsedTime + 1
+    end
 
     -- Play the next song
     playNextSong()
